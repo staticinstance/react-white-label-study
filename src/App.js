@@ -2,17 +2,16 @@ import React from 'react';
 import './App.css';
 import WhiteLabeledComponent from './white-labeled-component';
 
-//name is what will be used in render ie: <Name />
-//path is the file name without an extension
-const components = [{name: 'Header', path: 'header'}, {name: 'Button', path: 'button'}];
-
 class App extends WhiteLabeledComponent {
   constructor(props) {
     super(props);
-    this.components = components;
+
+    //name is what will be used in render ie: <Name />
+    //path is the file name without an extension
+    this.components = [{name: 'Header', path: 'header'}, {name: 'Button', path: 'button'}];
     this.components.forEach((cmp) => this[cmp.name] = null);
   }
-  
+
   getWhitelabeledButton(portal = ''){
     var that = this;
     var path = './' + (portal || "") + (portal ? "-" : "") + 'button'
