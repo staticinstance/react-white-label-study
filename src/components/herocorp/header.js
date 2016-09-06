@@ -1,8 +1,8 @@
-import DefaultHeader from './header';
+import DefaultHeader from '../header';
 class MyHeader extends DefaultHeader {
   constructor(props){
     super(props);
-    this.text = "The supercorp header"
+    this.text = "The herocorp header"
   }
 }
 

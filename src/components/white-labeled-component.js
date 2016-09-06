@@ -14,16 +14,13 @@ class WhiteLabeledComponent extends Component {
     }
     let that = this;
     let path;
+    const defaultPath = `./${component}`;
+    const portalPath = `./${window.portal}/${component}`;
     path = useDefault
-      ? './' + component
-      : './' + (window.portal || '') + (window.portal ? "-" : "") + component
-
-    //todo require a portal bundle like att.bundle
-    //that includes all the overridden components
-    // require.ensure(['att'], function(require) {
-    //   TheButton = require('button').default;
-    //   that.forceUpdate()
-    // })
+      ? defaultPath
+      : window.portal
+        ? portalPath
+        : defaultPath
 
     //try to dynamically import the component
     require.ensure([], function(require) {
@@ -31,7 +28,7 @@ class WhiteLabeledComponent extends Component {
         //check to see if there is an override for the portal
         that[name] = require(path).default;
       }catch(e){
-        //if not use default
+        //if import fails, use default
         that.getWhitelabeledComponent(name, component, true)
       }
 

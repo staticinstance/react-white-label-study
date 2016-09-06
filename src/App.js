@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import WhiteLabeledComponent from './white-labeled-component';
+import WhiteLabeledComponent from './components/white-labeled-component';
 
 class App extends WhiteLabeledComponent {
   constructor(props) {
@@ -8,37 +8,14 @@ class App extends WhiteLabeledComponent {
 
     //name is what will be used in render ie: <Name />
     //path is the file name without an extension
-    this.components = [{name: 'Header', path: 'header'}, {name: 'Button', path: 'button'}];
+    this.components = [
+    {name: 'Header', path: 'header'},
+    {name: 'Button', path: 'button'}];
     this.components.forEach((cmp) => this[cmp.name] = null);
   }
 
   componentWillMount(){
     super.componentWillMount();
-  }
-  //import then replace main button
-  getWhitelabeledButton(portal = ''){
-    var that = this;
-    var path = './' + (portal || "") + (portal ? "-" : "") + 'button'
-
-    //todo require a portal bundle like att.bundle
-    //that includes all the overridden components
-    // require.ensure(['att'], function(require) {
-    //   Button = require('button').default;
-    //   that.forceUpdate()
-    // })
-
-    //try to dynamically import the button
-    require.ensure([], function(require) {
-      try{
-        //check to see if there is an override for the portal
-        that.Button = require(path).default;
-      }catch(e){
-        //if not use default
-        that.getWhitelabeledButton()
-      }
-
-      that.forceUpdate()
-    })
   }
 
   render() {
@@ -54,10 +31,6 @@ class App extends WhiteLabeledComponent {
           ? <this.Button />
           : null
         }
-        <br/><br/>
-        <button onClick={() => this.getWhitelabeledButton('supercorp')}>supercorp</button>
-        <button onClick={() => this.getWhitelabeledButton('herocorp')}>herocorp</button>
-        <button onClick={() => this.getWhitelabeledButton('')}>default</button>
       </div>
     );
   }
