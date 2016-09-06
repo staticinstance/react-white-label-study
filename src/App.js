@@ -12,6 +12,10 @@ class App extends WhiteLabeledComponent {
     this.components.forEach((cmp) => this[cmp.name] = null);
   }
 
+  componentWillMount(){
+    super.componentWillMount();
+  }
+  //import then replace main button
   getWhitelabeledButton(portal = ''){
     var that = this;
     var path = './' + (portal || "") + (portal ? "-" : "") + 'button'
@@ -50,7 +54,7 @@ class App extends WhiteLabeledComponent {
           ? <this.Button />
           : null
         }
-        <br/>
+        <br/><br/>
         <button onClick={() => this.getWhitelabeledButton('supercorp')}>supercorp</button>
         <button onClick={() => this.getWhitelabeledButton('herocorp')}>herocorp</button>
         <button onClick={() => this.getWhitelabeledButton('')}>default</button>

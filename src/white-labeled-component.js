@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 
 class WhiteLabeledComponent extends Component {
   componentWillMount(){
+    //it is required that subclasses call super.componentWillMount();
+    //or figure out another place to initialize the components
     //dynamically import components
-    this.components.forEach((cmp) => this.getWhitelabeledComponents(cmp.name, cmp.path));
+    this.components.forEach((cmp) => this.getWhitelabeledComponent(cmp.name, cmp.path));
   }
   //todo pass in array of components to require
-  getWhitelabeledComponents(name, component, useDefault){
+  getWhitelabeledComponent(name, component, useDefault){
     if(!component){
       return <span />;
     }
@@ -16,7 +18,6 @@ class WhiteLabeledComponent extends Component {
       ? './' + component
       : './' + (window.portal || '') + (window.portal ? "-" : "") + component
 
-    console.log('1', path)
     //todo require a portal bundle like att.bundle
     //that includes all the overridden components
     // require.ensure(['att'], function(require) {
@@ -31,7 +32,7 @@ class WhiteLabeledComponent extends Component {
         that[name] = require(path).default;
       }catch(e){
         //if not use default
-        that.getWhitelabeledComponents(name, 'header', true)
+        that.getWhitelabeledComponent(name, component, true)
       }
 
       that.forceUpdate()

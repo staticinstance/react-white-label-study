@@ -7,7 +7,7 @@ class MyButton extends Component {
     this.color = 'blue'
   }
   onClick(){
-    alert("I'm the " + (window.portal || 'default') + " button")
+    alert(this.text)
   }
   render(){
     return (
