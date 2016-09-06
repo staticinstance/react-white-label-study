@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 
 class WhiteLabeledComponent extends Component {
+  componentWillMount(){
+    //dynamically import components
+    this.components.forEach((cmp) => this.getWhitelabeledComponents(cmp.name, cmp.path));
+  }
   //todo pass in array of components to require
   getWhitelabeledComponents(name, component, useDefault){
     if(!component){

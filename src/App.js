@@ -2,22 +2,17 @@ import React from 'react';
 import './App.css';
 import WhiteLabeledComponent from './white-labeled-component';
 
+//name is what will be used in render ie: <Name />
+//path is the file name without an extension
+const components = [{name: 'Header', path: 'header'}, {name: 'Button', path: 'button'}];
+
 class App extends WhiteLabeledComponent {
   constructor(props) {
     super(props);
-    this.state = {portal: window.portal};
-    this.Button = null
-    this.Header = null
+    this.components = components;
+    this.components.forEach((cmp) => this[cmp.name] = null);
   }
-
-  componentWillMount(){
-    //this is how to import components
-    //first define them in state
-    //then dynamically import them
-    this.getWhitelabeledComponents('Header', 'header');
-    this.getWhitelabeledComponents('Button', 'button');
-  }
-
+  
   getWhitelabeledButton(portal = ''){
     var that = this;
     var path = './' + (portal || "") + (portal ? "-" : "") + 'button'
