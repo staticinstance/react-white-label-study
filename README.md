@@ -1,4 +1,4 @@
-### A study on white labeling react components
+### A study on white labeling React components
 
 ### usage
 
