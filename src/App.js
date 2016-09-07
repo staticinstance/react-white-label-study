@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import WhiteLabeledComponent from './components/white-labeled-component';
+import NullableComponent from './components/nullable-component';
 
 class App extends WhiteLabeledComponent {
   constructor(props) {
@@ -14,23 +15,11 @@ class App extends WhiteLabeledComponent {
     this.components.forEach((cmp) => this[cmp.name] = null);
   }
 
-  componentWillMount(){
-    super.componentWillMount();
-  }
-
   render() {
     return (
       <div className="App">
-        {
-          this.Header !== null
-          ? <this.Header />
-          : null
-        }
-        {
-          this.Button !== null
-          ? <this.Button />
-          : null
-        }
+        <NullableComponent cmp={this.Header} />
+        <NullableComponent cmp={this.Button} />
       </div>
     );
   }
