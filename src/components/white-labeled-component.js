@@ -1,26 +1,23 @@
 import React, { Component } from 'react';
 
 class WhiteLabeledComponent extends Component {
-  componentWillMount(){
+  constructor(props){
+    super(props);
+    props.components.forEach((path) => this[this.getComponentName(path)] = null)
+  }
+
+  getComponentName(path){
+    return path.replace(/\s+/g, '-').replace(/[^a-zA-Z-]/g, '').toLowerCase()
+  }
+
+  componentWillMount(props){
     //it is required that subclasses call super.componentWillMount();
-    //or figure out another place to initialize the components
-    //dynamically import components
-    this.components.forEach((cmp) => this.getWhitelabeledComponent(cmp.name, cmp.path));
+    this.props.components.forEach((cmp) => this.getWhitelabeledComponent(cmp));
   }
   //todo pass in array of components to require
-  getWhitelabeledComponent(name, component, useDefault){
-    if(!component){
-      return <span />;
-    }
-    let that = this;
-    let path;
-    const defaultPath = `./${component}`;
-    const portalPath = `./${window.portal}/${component}`;
-    path = useDefault
-      ? defaultPath
-      : window.portal
-        ? portalPath
-        : defaultPath
+  getWhitelabeledComponent(path){
+    const that = this;
+    const name = this.getComponentName(path);
 
     //try to dynamically import the component
     require.ensure([], function(require) {
@@ -28,8 +25,15 @@ class WhiteLabeledComponent extends Component {
         //check to see if there is an override for the portal
         that[name] = require(path).default;
       }catch(e){
-        //if import fails, use default
-        that.getWhitelabeledComponent(name, component, true)
+        //if import fails, show error
+        class NotFound extends Component {
+          render(){
+            return (
+              <div>Could not find {path}</div>
+            );
+          }
+        }
+        that[name] = NotFound;
       }
 
       that.forceUpdate()
