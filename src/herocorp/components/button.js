@@ -1,4 +1,4 @@
-import DefaultButton from '../button';
+import DefaultButton from '../../components/button';
 
 class MyButton extends DefaultButton {
   constructor(props){

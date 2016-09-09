@@ -1,4 +1,5 @@
-import DefaultHeader from '../header';
+import DefaultHeader from '../../components/header';
+
 class MyHeader extends DefaultHeader {
   constructor(props){
     super(props);
