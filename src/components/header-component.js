@@ -1,7 +1,7 @@
 import React from 'react';
 import '../App.css';
+import NullableComponent from 'nullable-component';
 import WhiteLabeledComponent from '../white-labeled-component';
-import NullableComponent from '../nullable-component';
 
 class Header extends WhiteLabeledComponent {
   render() {
